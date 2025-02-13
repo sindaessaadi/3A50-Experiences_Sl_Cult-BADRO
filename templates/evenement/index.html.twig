@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Evenement index{% endblock %}
+{% block title %}Evenement Index{% endblock %}
 
 {% block body %}
-    <h1>Evenement index</h1>
+    <h1>Evenement Index</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                
                 <th>Id_event</th>
                 <th>Titre</th>
                 <th>Description</th>
@@ -16,19 +16,19 @@
                 <th>Heure</th>
                 <th>Lieu</th>
                 <th>Type</th>
-                <th>Organisateur_nom</th>
-                <th>Nombre_max_participants</th>
+                <th>Organisateur</th>
+                <th>Max Participants</th>
                 <th>Status</th>
-                <th>Ticket_prix</th>
-                <th>Periode_inscription_fin</th>
-                <th>actions</th>
+                <th>Ticket Price</th>
+                <th>Inscription Deadline</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for evenement in evenements %}
             <tr>
                 <td>{{ evenement.id }}</td>
-                <td>{{ evenement.idEvent }}</td>
+                
                 <td>{{ evenement.titre }}</td>
                 <td>{{ evenement.description }}</td>
                 <td>{{ evenement.date ? evenement.date|date('Y-m-d') : '' }}</td>
@@ -41,17 +41,24 @@
                 <td>{{ evenement.ticketPrix }}</td>
                 <td>{{ evenement.periodeInscriptionFin }}</td>
                 <td>
-                    <a href="{{ path('app_evenement_show', {'id': evenement.id}) }}">show</a>
-                    <a href="{{ path('app_evenement_edit', {'id': evenement.id}) }}">edit</a>
+                    <a href="{{ path('app_evenement_show', {'id': evenement.id}) }}">View</a>
+                    <a href="{{ path('app_evenement_edit', {'id': evenement.id}) }}">Edit</a>
+                    
+                    {% if evenement.nombreMaxParticipants > 0 %}
+                        <a href="{{ path('participation_buy', {'id': evenement.id}) }}">Buy Ticket</a>
+                    {% else %}
+                        <span style="color: red;">Sold Out</span>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="14">no records found</td>
+                <td colspan="14">No records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_evenement_new') }}">Create new</a>
+   <a href="{{ path('app_evenement_new') }}">Create new</a>
+
 {% endblock %}

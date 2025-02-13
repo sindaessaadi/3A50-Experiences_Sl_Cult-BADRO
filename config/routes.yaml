@@ -3,3 +3,28 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+evenement_index:
+    path: /evenement
+    controller: App\Controller\EvenementController::index
+    methods: [GET]
+
+evenement_new:
+    path: /evenement/new
+    controller: App\Controller\EvenementController::new
+    methods: [GET, POST]
+
+evenement_show:
+    path: /evenement/{id}
+    controller: App\Controller\EvenementController::show
+    methods: [GET]
+
+evenement_edit:
+    path: /evenement/{id}/edit
+    controller: App\Controller\EvenementController::edit
+    methods: [GET, POST]
+
+evenement_delete:
+    path: /evenement/{id}
+    controller: App\Controller\EvenementController::delete
+    methods: [POST]

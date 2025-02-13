@@ -25,7 +25,7 @@ class Participation
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_inscription = null;
-
+    
     #[ORM\Column(length: 255)]
     private ?string $evenement_nom = null;
 

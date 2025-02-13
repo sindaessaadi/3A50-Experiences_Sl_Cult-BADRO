@@ -10,25 +10,26 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class EvenementType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('id_event')
-            ->add('titre')
-            ->add('description')
+            
+        ->add('titre', TextType::class)
+            ->add('description', TextType::class)
             ->add('date', null, [
                 'widget' => 'single_text',
             ])
             ->add('heure', null, [
                 'widget' => 'single_text',
             ])
-            ->add('lieu')
-            ->add('type')
-            ->add('organisateur_nom')
-            ->add('nombre_max_participants')
+            ->add('lieu', TextType::class)
+            ->add('type', TextType::class)
+            ->add('organisateurNom', TextType::class)
+            ->add('nombreMaxParticipants', IntegerType::class)
             ->add('status', ChoiceType::class, [
                 'choices' => [
                     'Upcoming' => 'A venir',
@@ -37,8 +38,8 @@ class EvenementType extends AbstractType
                     'Finished' => 'terminé',
                 ],
             ])
-            ->add('ticket_prix')
-            ->add('periode_inscription_fin')
+            ->add('ticketPrix', TextType::class)
+            ->add('periodeInscriptionFin', TextType::class);
         ;
     }
 

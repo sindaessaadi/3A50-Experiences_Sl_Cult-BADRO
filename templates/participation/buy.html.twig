@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Buy Ticket{% endblock %}
+
+{% block body %}
+<h1>Buy Ticket for: {{ evenement.titre }}</h1>
+
+<p><strong>Date:</strong> {{ evenement.date|date('Y-m-d') }}</p>
+<p><strong>Time:</strong> {{ evenement.heure }}</p>
+<p><strong>Location:</strong> {{ evenement.lieu }}</p>
+<p><strong>Available Tickets:</strong> {{ evenement.nombreMaxParticipants }}</p>
+<p><strong>Price:</strong> {{ evenement.ticketPrix }} TND</p>
+
+{% if evenement.nombreMaxParticipants > 0 %}
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit">Buy Ticket</button>
+    {{ form_end(form) }}
+{% else %}
+    <p style="color: red;">❌ Sold Out!</p>
+{% endif %}
+
+<a href="{{ path('evenement_index') }}">Back to events</a>
+{% endblock %}
