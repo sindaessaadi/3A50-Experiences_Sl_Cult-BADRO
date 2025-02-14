@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper {
+        margin: 1em auto;
+        max-width: 800px;
+        width: 95%;
+        font: 18px/1.5 sans-serif;
+    }
+
+    .example-wrapper code {
+        background: #F5F5F5;
+        padding: 2px 6px;
+    }
+
+    /* Button Styles */
+    .btn-primary {
+        background-color: #1877f2; /* Facebook blue */
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #165e9e; /* Darker blue when hovered */
+    }
+
+    .btn-primary:active {
+        background-color: #0d478d; /* Even darker blue when clicked */
+    }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+
+    <p>This friendly message is coming from:</p>
+    <ul>
+        <li>Your controller at <code>C:/Users/Mega-PC/Desktop/sinda h/badro/src/Controller/HomeController.php</code></li>
+        <li>Your template at <code>C:/Users/Mega-PC/Desktop/sinda h/badro/templates/home/index.html.twig</code></li>
+    </ul>
+
+    <!-- Navigate to matching index -->
+    <a href="{{ path('app_matching_index') }}" class="btn-primary">Go to Matching Index</a>
+</div>
+{% endblock %}

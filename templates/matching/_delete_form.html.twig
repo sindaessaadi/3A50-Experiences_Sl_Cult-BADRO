@@ -1,0 +1,30 @@
+<form method="post" action="{{ path('app_matching_delete', {'id': matching.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ matching.id) }}">
+
+    <button class="delete-button">Delete</button>
+</form>
+
+<style>
+    /* Facebook-inspired styles for the delete button */
+
+    .delete-button {
+        background-color: #f44336; /* Red for delete action */
+        color: #fff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-top: 15px;
+    }
+
+    .delete-button:hover {
+        background-color: #d32f2f; /* Darker red when hovering */
+    }
+
+    .delete-button:active {
+        background-color: #c62828; /* Even darker red when clicked */
+    }
+</style>
