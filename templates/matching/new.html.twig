@@ -1,0 +1,157 @@
+{% block title %}New Matching{% endblock %}
+
+{% block body %}
+    <style>
+        /* Facebook-inspired styles for the page */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: #1c1e21;
+            font-size: 28px;
+            text-align: center;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        }
+
+        .form-container .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-container label {
+            font-weight: 600;
+            color: #1c1e21;
+        }
+
+        .form-container input,
+        .form-container select,
+        .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            color: #1c1e21;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+
+        .form-container input:focus,
+        .form-container select:focus,
+        .form-container textarea:focus {
+            border-color: #1877f2;
+            outline: none;
+        }
+
+        .form-container button {
+            background-color: #1877f2;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .form-container button:hover {
+            background-color: #0d6efd;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            color: #1877f2;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            .form-container {
+                width: 95%;
+                padding: 15px;
+            }
+
+            .form-container input,
+            .form-container select,
+            .form-container textarea {
+                font-size: 12px;
+            }
+
+            .form-container button {
+                font-size: 12px;
+            }
+        }
+    </style>
+
+    <div class="form-container">
+        <h1>Create New Matching</h1>
+
+        {{ form_start(form) }}
+
+        <!-- Render each field manually -->
+        <div class="form-group">
+            {{ form_label(form.score_compatibilite) }}
+            {{ form_widget(form.score_compatibilite) }}
+            {% if form.score_compatibilite.vars.errors|length > 0 %}
+                <div class="form-error">
+                    {{ form_errors(form.score_compatibilite) }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.status) }}
+            {{ form_widget(form.status) }}
+            {% if form.status.vars.errors|length > 0 %}
+                <div class="form-error">
+                    {{ form_errors(form.status) }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.date_matching) }}
+            {{ form_widget(form.date_matching) }}
+            {% if form.date_matching.vars.errors|length > 0 %}
+                <div class="form-error">
+                    {{ form_errors(form.date_matching) }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn">{{ button_label|default('Save') }}</button>
+        </div>
+
+        {{ form_end(form) }}
+
+        <div class="back-link">
+            <a href="{{ path('app_matching_index') }}">Back to list</a>
+        </div>
+    </div>
+
+{% endblock %}
