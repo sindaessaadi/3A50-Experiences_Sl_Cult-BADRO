@@ -15,16 +15,13 @@ class Participation
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $id_participant = null;
-
-    #[ORM\Column]
     private ?int $id_event = null;
 
     #[ORM\Column(length: 255)]
     private ?string $nom_participant = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date_inscription = null;
+    private ?\DateTime $date_inscription = null;
     
     #[ORM\Column(length: 255)]
     private ?string $evenement_nom = null;
@@ -34,17 +31,6 @@ class Participation
         return $this->id;
     }
 
-    public function getIdParticipant(): ?int
-    {
-        return $this->id_participant;
-    }
-
-    public function setIdParticipant(int $id_participant): static
-    {
-        $this->id_participant = $id_participant;
-
-        return $this;
-    }
 
     public function getIdEvent(): ?int
     {
@@ -70,15 +56,14 @@ class Participation
         return $this;
     }
 
-    public function getDateInscription(): ?\DateTimeInterface
+    public function getDateInscription(): ?\DateTime
     {
         return $this->date_inscription;
     }
 
-    public function setDateInscription(\DateTimeInterface $date_inscription): static
+    public function setDateInscription(\DateTime $date): self
     {
-        $this->date_inscription = $date_inscription;
-
+        $this->date_inscription = $date;
         return $this;
     }
 
@@ -93,4 +78,12 @@ class Participation
 
         return $this;
     }
+
+    public function __construct()
+{
+    $this->date_inscription = new \DateTime(); // Automatically set current date
+}
+
+    
+
 }

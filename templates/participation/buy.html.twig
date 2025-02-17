@@ -6,7 +6,7 @@
 <h1>Buy Ticket for: {{ evenement.titre }}</h1>
 
 <p><strong>Date:</strong> {{ evenement.date|date('Y-m-d') }}</p>
-<p><strong>Time:</strong> {{ evenement.heure }}</p>
+<p><strong>Time:</strong> {{ evenement.heure|date('H:i:s') }}</p>
 <p><strong>Location:</strong> {{ evenement.lieu }}</p>
 <p><strong>Available Tickets:</strong> {{ evenement.nombreMaxParticipants }}</p>
 <p><strong>Price:</strong> {{ evenement.ticketPrix }} TND</p>

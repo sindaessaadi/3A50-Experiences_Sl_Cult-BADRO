@@ -45,7 +45,7 @@
                     <a href="{{ path('app_evenement_edit', {'id': evenement.id}) }}">Edit</a>
                     
                     {% if evenement.nombreMaxParticipants > 0 %}
-                        <a href="{{ path('participation_buy', {'id': evenement.id}) }}">Buy Ticket</a>
+                        <a href="{{ path('participation_buy', {'id': evenement.id}) }}" class="btn btn-primary">Buy Ticket</a>
                     {% else %}
                         <span style="color: red;">Sold Out</span>
                     {% endif %}

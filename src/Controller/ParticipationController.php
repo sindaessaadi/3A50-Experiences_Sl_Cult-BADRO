@@ -23,21 +23,32 @@ class ParticipationController extends AbstractController
     }
 
     #[Route('/buy/{id}', name: 'participation_buy', methods: ['GET', 'POST'])]
-    public function buyTicket(Request $request, Evenement $evenement, EntityManagerInterface $em): Response
+public function buyTicket(Request $request, Evenement $evenement, EntityManagerInterface $em): Response
 {
+    if ($evenement->getNombreMaxParticipants() <= 0) {
+        $this->addFlash('danger', 'Sorry, this event is sold out!');
+        return $this->redirectToRoute('evenement_index');
+    }
+
+    // Create a new participation object
     $participation = new Participation();
-    $participation->setIdEvent($evenement->getIdEvent());
-    $participation->setEvenementNom($evenement->getTitre());
-    $participation->setDateInscription(new \DateTime());
+    $participation->setIdEvent($evenement->getId());  // Get event ID
+    $participation->setEvenementNom($evenement->getTitre());  // Get event title
+    $participation->setDateInscription(new \DateTime());  // Set current date
 
-    dump($participation); // Debugging: Inspect the Participation object
-
+    // Create form (only participant name is entered)
     $form = $this->createForm(ParticipationType::class, $participation);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
+        // Reduce available spots in the event
+        $evenement->setNombreMaxParticipants($evenement->getNombreMaxParticipants() - 1);
+
+        // Save participation and updated event
         $em->persist($participation);
+        $em->persist($evenement);
         $em->flush();
+
         $this->addFlash('success', 'Ticket successfully purchased!');
         return $this->redirectToRoute('participation_index');
     }
@@ -48,6 +59,7 @@ class ParticipationController extends AbstractController
     ]);
 }
 
+
     #[Route('/{id}', name: 'participation_show', methods: ['GET'])]
     public function show(Participation $participation): Response
     {
@@ -57,7 +69,7 @@ class ParticipationController extends AbstractController
     #[Route('/{id}/delete', name: 'participation_delete', methods: ['POST'])]
     public function delete(Request $request, Participation $participation, EntityManagerInterface $em): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $participation->getIdParticipant(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $participation->getId(), $request->request->get('_token'))) {
             $event = $em->getRepository(Evenement::class)->find($participation->getIdEvent());
 
             if ($event) {
