@@ -1,91 +1,102 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Evenement{% endblock %}
 
 {% block body %}
     <div class="container">
-        <h1 class="my-4">Create New Evenement</h1>
+        <h1 class="my-4 text-center">Create New Event</h1>
 
         {# Start the form and include the CSRF token #}
         {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
             {# Display form-wide errors (e.g., CSRF token errors) #}
-            {{ form_errors(form) }}
+            <div class="mb-4">
+                {{ form_errors(form) }}
+            </div>
 
-            {# Render each form field individually #}
-            <div class="form-group">
-                {{ form_label(form.titre, 'Titre') }}
-                {{ form_widget(form.titre, {'attr': {'class': 'form-control'}}) }}
+            {# Render each form field individually with reduced size #}
+            <div class="form-group mb-3">
+                {{ form_label(form.titre, 'Event Title') }}
+                {{ form_widget(form.titre, {'attr': {'class': 'form-control form-control-sm'}}) }}
                 {{ form_errors(form.titre) }}
             </div>
 
-            <div class="form-group">
+            <div class="form-group mb-3">
                 {{ form_label(form.description, 'Description') }}
-                {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                {{ form_widget(form.description, {'attr': {'class': 'form-control form-control-sm'}}) }}
                 {{ form_errors(form.description) }}
             </div>
 
-            <div class="form-group">
+            <div class="form-group mb-3">
                 {{ form_label(form.date, 'Date') }}
-                {{ form_widget(form.date, {'attr': {'class': 'form-control'}}) }}
+                {{ form_widget(form.date, {'attr': {'class': 'form-control form-control-sm'}}) }}
                 {{ form_errors(form.date) }}
             </div>
 
-            <div class="form-group">
-                {{ form_label(form.heure, 'Heure') }}
-                {{ form_widget(form.heure, {'attr': {'class': 'form-control'}}) }}
+            <div class="form-group mb-3">
+                {{ form_label(form.heure, 'Time') }}
+                {{ form_widget(form.heure, {'attr': {'class': 'form-control form-control-sm'}}) }}
                 {{ form_errors(form.heure) }}
             </div>
 
-            <div class="form-group">
-                {{ form_label(form.lieu, 'Lieu') }}
-                {{ form_widget(form.lieu, {'attr': {'class': 'form-control'}}) }}
+            <div class="form-group mb-3">
+                {{ form_label(form.lieu, 'Location') }}
+                {{ form_widget(form.lieu, {'attr': {'class': 'form-control form-control-sm'}}) }}
                 {{ form_errors(form.lieu) }}
             </div>
 
-            <div class="form-group">
-                {{ form_label(form.type, 'Type') }}
-                {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
+            <div class="form-group mb-3">
+                {{ form_label(form.type, 'Event Type') }}
+                {{ form_widget(form.type, {'attr': {'class': 'form-control form-control-sm'}}) }}
                 {{ form_errors(form.type) }}
             </div>
 
-            <div class="form-group">
-                {{ form_label(form.organisateurNom, 'Organisateur Nom') }}
-                {{ form_widget(form.organisateurNom, {'attr': {'class': 'form-control'}}) }}
+            <div class="form-group mb-3">
+                {{ form_label(form.organisateurNom, 'Organizer Name') }}
+                {{ form_widget(form.organisateurNom, {'attr': {'class': 'form-control form-control-sm'}}) }}
                 {{ form_errors(form.organisateurNom) }}
             </div>
 
-            <div class="form-group">
-                {{ form_label(form.nombreMaxParticipants, 'Nombre Max Participants') }}
-                {{ form_widget(form.nombreMaxParticipants, {'attr': {'class': 'form-control'}}) }}
+            <div class="form-group mb-3">
+                {{ form_label(form.nombreMaxParticipants, 'Max Participants') }}
+                {{ form_widget(form.nombreMaxParticipants, {'attr': {'class': 'form-control form-control-sm'}}) }}
                 {{ form_errors(form.nombreMaxParticipants) }}
             </div>
 
-            <div class="form-group">
+            <div class="form-group mb-3">
                 {{ form_label(form.status, 'Status') }}
-                {{ form_widget(form.status, {'attr': {'class': 'form-control'}}) }}
+                {{ form_widget(form.status, {'attr': {'class': 'form-control form-control-sm'}}) }}
                 {{ form_errors(form.status) }}
             </div>
 
-            <div class="form-group">
-                {{ form_label(form.ticketPrix, 'Ticket Prix') }}
-                {{ form_widget(form.ticketPrix, {'attr': {'class': 'form-control'}}) }}
+            <div class="form-group mb-3">
+                {{ form_label(form.ticketPrix, 'Ticket Price (TND)') }}
+                {{ form_widget(form.ticketPrix, {'attr': {'class': 'form-control form-control-sm'}}) }}
                 {{ form_errors(form.ticketPrix) }}
             </div>
 
-            <div class="form-group">
-                {{ form_label(form.periodeInscriptionFin, 'Periode Inscription Fin') }}
-                {{ form_widget(form.periodeInscriptionFin, {'attr': {'class': 'form-control'}}) }}
+            <div class="form-group mb-3">
+                {{ form_label(form.periodeInscriptionFin, 'End of Registration Period') }}
+                {{ form_widget(form.periodeInscriptionFin, {'attr': {'class': 'form-control form-control-sm'}}) }}
                 {{ form_errors(form.periodeInscriptionFin) }}
             </div>
 
             {# Include the CSRF token manually (optional, as form_end() includes it) #}
             {{ form_widget(form._token) }}
 
-            {# Submit button #}
-            <button type="submit" class="btn btn-primary">Save</button>
+            {# Submit button with darker color and compact size #}
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary btn-sm" style="background-color: #0056b3; border-color: #0056b3;">Save Event</button>
+            </div>
 
-        {# End the form (this automatically includes the CSRF token) #}
+        {# End the form #}
         {{ form_end(form) }}
+
+        {# Return to Event List Button at the bottom #}
+        <div class="text-center mt-4">
+            <a href="{{ path('app_evenement_index') }}" class="btn btn-secondary btn-sm">Return to Event List</a>
+        </div>
     </div>
+
+    
+
 {% endblock %}

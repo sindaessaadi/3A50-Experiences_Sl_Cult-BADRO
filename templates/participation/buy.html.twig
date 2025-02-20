@@ -1,24 +1,123 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Buy Ticket{% endblock %}
-
 {% block body %}
-<h1>Buy Ticket for: {{ evenement.titre }}</h1>
+    <div class="container">
+        <h1 class="my-4 text-center">Buy Ticket for: {{ evenement.titre }}</h1>
 
-<p><strong>Date:</strong> {{ evenement.date|date('Y-m-d') }}</p>
-<p><strong>Time:</strong> {{ evenement.heure|date('H:i:s') }}</p>
-<p><strong>Location:</strong> {{ evenement.lieu }}</p>
-<p><strong>Available Tickets:</strong> {{ evenement.nombreMaxParticipants }}</p>
-<p><strong>Price:</strong> {{ evenement.ticketPrix }} TND</p>
+        <div class="event-details">
+            <p><strong>Date:</strong> {{ evenement.date|date('Y-m-d') }}</p>
+            <p><strong>Time:</strong> {{ evenement.heure|date('H:i:s') }}</p>
+            <p><strong>Location:</strong> {{ evenement.lieu }}</p>
+            <p><strong>Available Tickets:</strong> {{ evenement.nombreMaxParticipants }}</p>
+            <p><strong>Price:</strong> {{ evenement.ticketPrix }} TND</p>
+        </div>
 
-{% if evenement.nombreMaxParticipants > 0 %}
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button type="submit">Buy Ticket</button>
-    {{ form_end(form) }}
-{% else %}
-    <p style="color: red;">❌ Sold Out!</p>
-{% endif %}
+        {# Check if there are available tickets #}
+        {% if evenement.nombreMaxParticipants > 0 %}
+            <div class="ticket-form mt-4">
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                    {{ form_widget(form, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                    <div class="text-center mt-3">
+                        <button type="submit" class="btn btn-primary btn-sm" style="background-color: #007bff; border-color: #007bff;">Buy Ticket</button>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        {% else %}
+            <p class="text-danger mt-4">❌ Sold Out!</p>
+        {% endif %}
 
-<a href="{{ path('evenement_index') }}">Back to events</a>
+        {# Back to events button #}
+        <div class="text-center mt-4">
+            <a href="{{ path('evenement_index') }}" class="btn btn-secondary btn-sm">Back to Events</a>
+        </div>
+    </div>
+
+
+
+    {# Custom Styles #}
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        h1 {
+            color: #0056b3;
+            font-size: 1.6rem;
+        }
+
+        /* Event Details */
+        .event-details p {
+            font-size: 1.1rem;
+            margin: 10px 0;
+        }
+
+        /* Button Styles */
+        .btn {
+            padding: 8px 25px;
+            font-size: 0.95rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #004085;
+            border-color: #003366;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #495057;
+            border-color: #343a40;
+        }
+
+        .text-danger {
+            color: #dc3545;
+        }
+
+        /* Form Styles */
+        .form-control {
+            padding: 8px;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+        }
+
+        .form-control-sm {
+            padding: 6px;
+            font-size: 0.875rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 767px) {
+            .form-control-sm {
+                font-size: 0.8rem;
+                padding: 6px;
+            }
+        }
+    </style>
 {% endblock %}
