@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Participation index{% endblock %}
+
+{% block body %}
+    <h1>Participation index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Id_event</th>
+                <th>Nom_participant</th>
+                <th>Date_inscription</th>
+                <th>Evenement_nom</th>
+                <th>Telephone_number</th>
+                <th>Ticket_code</th>
+                <th>Paiment_method</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for participation in participations %}
+            <tr>
+                <td>{{ participation.id }}</td>
+                <td>{{ participation.idEvent }}</td>
+                <td>{{ participation.nomParticipant }}</td>
+                <td>{{ participation.dateInscription ? participation.dateInscription|date('Y-m-d') : '' }}</td>
+                <td>{{ participation.evenementNom }}</td>
+                <td>{{ participation.telephoneNumber }}</td>
+                <td>{{ participation.ticketCode }}</td>
+                <td>{{ participation.paimentMethod }}</td>
+                <td>
+                    <a href="{{ path('app_participation_show', {'id': participation.id}) }}">show</a>
+                    <a href="{{ path('app_participation_edit', {'id': participation.id}) }}">edit</a>
+                    
+                    <form method="post" action="{{ path('app_participation_delete', {'id': participation.id}) }}" onsubmit="return confirm('Are you sure you want to cancel this ticket?');" class="d-inline">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ participation.id) }}">
+                        <button type="submit" class="btn btn-danger btn-sm">Cancel Ticket</button>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+<div class="text-center mt-4">
+            <a href="{{ path('app_evenement_index') }}" class="btn btn-secondary btn-sm">Return to Event List</a>
+ </div>
+    
+{% endblock %}

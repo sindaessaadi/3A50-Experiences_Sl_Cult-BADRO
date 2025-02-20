@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="my-4 text-center">Edit Participation for: {{ participation.NomParticipant }}</h1>
+
+        <div class="event-details">
+            <p><strong>Event:</strong> {{ participation.evenementNom }}</p>
+            <p><strong>Date:</strong> {{ participation.dateInscription|date('Y-m-d') }}</p>
+            <p><strong>Ticket Code:</strong> {{ participation.TicketCode }}</p>
+        </div>
+
+        <div class="ticket-form mt-4">
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                <div class="form-group">
+                    {{ form_label(form.nom_participant) }}
+                    {{ form_widget(form.nom_participant, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.telephone_number) }}
+                    {{ form_widget(form.telephone_number, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.paiment_method) }}
+                    {{ form_widget(form.paiment_method, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn btn-primary btn-sm" style="background-color: #007bff; border-color: #007bff;">Update Participation</button>
+                </div>
+            {{ form_end(form) }}
+        </div>
+
+        {# Back to event details #}
+        <div class="text-center mt-4">
+            <a href="{{ path('evenement_index') }}" class="btn btn-secondary btn-sm">Back to Events</a>
+        </div>
+    </div>
+{% endblock %}

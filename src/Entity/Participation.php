@@ -26,6 +26,15 @@ class Participation
     #[ORM\Column(length: 255)]
     private ?string $evenement_nom = null;
 
+    #[ORM\Column]
+    private ?int $telephone_number = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $ticket_code = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $paiment_method = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -83,6 +92,42 @@ class Participation
 {
     $this->date_inscription = new \DateTime(); // Automatically set current date
 }
+
+    public function getTelephoneNumber(): ?int
+    {
+        return $this->telephone_number;
+    }
+
+    public function setTelephoneNumber(int $telephone_number): static
+    {
+        $this->telephone_number = $telephone_number;
+
+        return $this;
+    }
+
+    public function getTicketCode(): ?string
+    {
+        return $this->ticket_code;
+    }
+
+    public function setTicketCode(string $ticket_code): static
+    {
+        $this->ticket_code = $ticket_code;
+
+        return $this;
+    }
+
+    public function getPaimentMethod(): ?string
+    {
+        return $this->paiment_method;
+    }
+
+    public function setPaimentMethod(string $paiment_method): static
+    {
+        $this->paiment_method = $paiment_method;
+
+        return $this;
+    }
 
     
 

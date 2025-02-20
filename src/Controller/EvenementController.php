@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 use App\Entity\Evenement;
@@ -9,17 +8,25 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/evenement')]
+#[Route('/Frontend/evenement')]
+#[Route('/Backend/evenement')]
 final class EvenementController extends AbstractController
 {
     #[Route(name: 'app_evenement_index', methods: ['GET'])]
-    public function index(EvenementRepository $evenementRepository): Response
+    public function index(EvenementRepository $evenementRepository, Request $request): Response
     {
-        return $this->render('evenement/index.html.twig', [
-            'evenements' => $evenementRepository->findAll(),
-        ]);
+        // Check if the current route is Frontend or Backend based on the URI
+        if (strpos($request->getRequestUri(), '/Frontend/') !== false) {
+            return $this->render('Frontend/evenement/index.html.twig', [
+                'evenements' => $evenementRepository->findAll(),
+            ]);
+        } else {
+            return $this->render('Backend/evenement/index.html.twig', [
+                'evenements' => $evenementRepository->findAll(),
+            ]);
+        }
     }
 
     #[Route('/new', name: 'app_evenement_new', methods: ['GET', 'POST'])]
@@ -36,18 +43,31 @@ final class EvenementController extends AbstractController
             return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('evenement/new.html.twig', [
-            'evenement' => $evenement,
-            'form' => $form,
-        ]);
+        if (strpos($request->getRequestUri(), '/Frontend/') !== false) {
+            return $this->render('Frontend/evenement/new.html.twig', [
+                'evenement' => $evenement,
+                'form' => $form->createView(),
+            ]);
+        } else {
+            return $this->render('Backend/evenement/new.html.twig', [
+                'evenement' => $evenement,
+                'form' => $form->createView(),
+            ]);
+        }
     }
 
     #[Route('/{id}', name: 'app_evenement_show', methods: ['GET'])]
-    public function show(Evenement $evenement): Response
+    public function show(Evenement $evenement, Request $request): Response
     {
-        return $this->render('evenement/show.html.twig', [
-            'evenement' => $evenement,
-        ]);
+        if (strpos($request->getRequestUri(), '/Frontend/') !== false) {
+            return $this->render('Frontend/evenement/show.html.twig', [
+                'evenement' => $evenement,
+            ]);
+        } else {
+            return $this->render('Backend/evenement/show.html.twig', [
+                'evenement' => $evenement,
+            ]);
+        }
     }
 
     #[Route('/{id}/edit', name: 'app_evenement_edit', methods: ['GET', 'POST'])]
@@ -62,16 +82,23 @@ final class EvenementController extends AbstractController
             return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('evenement/edit.html.twig', [
-            'evenement' => $evenement,
-            'form' => $form,
-        ]);
+        if (strpos($request->getRequestUri(), '/Frontend/') !== false) {
+            return $this->render('Frontend/evenement/edit.html.twig', [
+                'evenement' => $evenement,
+                'form' => $form->createView(),
+            ]);
+        } else {
+            return $this->render('Backend/evenement/edit.html.twig', [
+                'evenement' => $evenement,
+                'form' => $form->createView(),
+            ]);
+        }
     }
 
     #[Route('/{id}', name: 'app_evenement_delete', methods: ['POST'])]
     public function delete(Request $request, Evenement $evenement, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$evenement->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $evenement->getId(), $request->request->get('_token'))) {
             $entityManager->remove($evenement);
             $entityManager->flush();
         }
@@ -79,3 +106,6 @@ final class EvenementController extends AbstractController
         return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
     }
 }
+
+
+

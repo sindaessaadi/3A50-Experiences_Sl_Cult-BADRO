@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="my-4 text-center">Buy Ticket for: {{ evenement.titre }}</h1>
+
+        <div class="event-details">
+            <p><strong>Date:</strong> {{ evenement.date|date('Y-m-d') }}</p>
+            <p><strong>Time:</strong> {{ evenement.heure|date('H:i:s') }}</p>
+            <p><strong>Location:</strong> {{ evenement.lieu }}</p>
+            <p><strong>Available Tickets:</strong> {{ evenement.nombreMaxParticipants }}</p>
+            <p><strong>Price:</strong> {{ evenement.ticketPrix }} TND</p>
+        </div>
+
+        {# Check if there are available tickets #}
+        {% if evenement.nombreMaxParticipants > 0 %}
+            <div class="ticket-form mt-4">
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                    <div class="form-group">
+                        {{ form_label(form.telephone_number) }}
+                        {{ form_widget(form.telephone_number, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.paiment_method) }}
+                        {{ form_widget(form.paiment_method, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <button type="submit" class="btn btn-primary btn-sm" style="background-color: #007bff; border-color: #007bff;">Buy Ticket</button>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        {% else %}
+            <p class="text-danger mt-4">❌ Sold Out!</p>
+        {% endif %}
+
+        {# Back to events button #}
+        <div class="text-center mt-4">
+            <a href="{{ path('evenement_index') }}" class="btn btn-secondary btn-sm">Back to Events</a>
+        </div>
+    </div>
+{% endblock %}
