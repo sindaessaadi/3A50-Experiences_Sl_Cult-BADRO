@@ -13,21 +13,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/Frontend/matching')]
-#[Route('/Backend/matching')]
 final class MatchingController extends AbstractController
 {
     #[Route(name: 'app_matching_index', methods: ['GET'])]
-    public function index(MatchingRepository $matchingRepository, Request $request): Response
+    public function index(MatchingRepository $matchingRepository): Response
     {
-        $routePrefix = $request->attributes->get('_route_prefix');
-
-        $template = match ($routePrefix) {
-            '/Frontend/matching' => 'Frontend/matching/index.html.twig',
-            '/Backend/matching' => 'Backend/matching/index.html.twig',
-            default => 'matching/index.html.twig',
-        };
-
-        return $this->render($template, [
+        return $this->render('Frontend/matching/index.html.twig', [
             'matchings' => $matchingRepository->findAll(),
         ]);
     }
@@ -35,8 +26,6 @@ final class MatchingController extends AbstractController
     #[Route('/new', name: 'app_matching_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, ValidatorInterface $validator): Response
     {
-        $routePrefix = $request->attributes->get('_route_prefix');
-
         $matching = new Matching();
         $form = $this->createForm(MatchingType::class, $matching);
         $form->handleRequest($request);
@@ -47,16 +36,10 @@ final class MatchingController extends AbstractController
 
             if (count($errors) > 0) {
                 // If there are validation errors, return to the form and display the errors
-                $template = match ($routePrefix) {
-                    '/Frontend/matching' => 'Frontend/matching/new.html.twig',
-                    '/Backend/matching' => 'Backend/matching/new.html.twig',
-                    default => 'matching/new.html.twig',
-                };
-
-                return $this->render($template, [
+                return $this->render('Frontend/matching/new.html.twig', [
                     'matching' => $matching,
                     'form' => $form,
-                    'errors' => $errors,
+                    'errors' => $errors
                 ]);
             }
 
@@ -67,30 +50,16 @@ final class MatchingController extends AbstractController
             return $this->redirectToRoute('app_matching_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        $template = match ($routePrefix) {
-            '/Frontend/matching' => 'Frontend/matching/new.html.twig',
-            '/Backend/matching' => 'Backend/matching/new.html.twig',
-            default => 'matching/new.html.twig',
-        };
-
-        return $this->render($template, [
+        return $this->render('Frontend/matching/new.html.twig', [
             'matching' => $matching,
             'form' => $form,
         ]);
     }
 
     #[Route('/{id}', name: 'app_matching_show', methods: ['GET'])]
-    public function show(Matching $matching, Request $request): Response
+    public function show(Matching $matching): Response
     {
-        $routePrefix = $request->attributes->get('_route_prefix');
-
-        $template = match ($routePrefix) {
-            '/Frontend/matching' => 'Frontend/matching/show.html.twig',
-            '/Backend/matching' => 'Backend/matching/show.html.twig',
-            default => 'matching/show.html.twig',
-        };
-
-        return $this->render($template, [
+        return $this->render('Frontend/matching/show.html.twig', [
             'matching' => $matching,
         ]);
     }
@@ -98,8 +67,6 @@ final class MatchingController extends AbstractController
     #[Route('/{id}/edit', name: 'app_matching_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Matching $matching, EntityManagerInterface $entityManager, ValidatorInterface $validator): Response
     {
-        $routePrefix = $request->attributes->get('_route_prefix');
-
         $form = $this->createForm(MatchingType::class, $matching);
         $form->handleRequest($request);
 
@@ -109,16 +76,10 @@ final class MatchingController extends AbstractController
 
             if (count($errors) > 0) {
                 // If there are validation errors, return to the form and display the errors
-                $template = match ($routePrefix) {
-                    '/Frontend/matching' => 'Frontend/matching/edit.html.twig',
-                    '/Backend/matching' => 'Backend/matching/edit.html.twig',
-                    default => 'matching/edit.html.twig',
-                };
-
-                return $this->render($template, [
+                return $this->render('Frontend/matching/edit.html.twig', [
                     'matching' => $matching,
                     'form' => $form,
-                    'errors' => $errors,
+                    'errors' => $errors
                 ]);
             }
 
@@ -128,13 +89,7 @@ final class MatchingController extends AbstractController
             return $this->redirectToRoute('app_matching_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        $template = match ($routePrefix) {
-            '/Frontend/matching' => 'Frontend/matching/edit.html.twig',
-            '/Backend/matching' => 'Backend/matching/edit.html.twig',
-            default => 'matching/edit.html.twig',
-        };
-
-        return $this->render($template, [
+        return $this->render('Frontend/matching/edit.html.twig', [
             'matching' => $matching,
             'form' => $form,
         ]);

@@ -17,7 +17,7 @@ final class EvenementController extends AbstractController
     #[Route(name: 'app_evenement_index', methods: ['GET'])]
     public function index(EvenementRepository $evenementRepository, Request $request): Response
     {
-        // Check if the current route is Frontend or Backend based on the URI
+        
         if (strpos($request->getRequestUri(), '/Frontend/') !== false) {
             return $this->render('Frontend/evenement/index.html.twig', [
                 'evenements' => $evenementRepository->findAll(),
