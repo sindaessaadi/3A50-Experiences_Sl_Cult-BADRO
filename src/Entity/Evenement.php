@@ -28,6 +28,7 @@ class Evenement
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Assert\NotBlank(message: "La date ne peut pas être vide.")]
     #[Assert\Type("\DateTimeInterface", message: "La date doit être une date valide.")]
+    #[Assert\GreaterThan("today", message: "La date de l'événement doit être dans le futur.")]
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
@@ -41,6 +42,7 @@ class Evenement
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Le type ne peut pas être vide.")]
+    #[Assert\Regex(pattern: "/^[A-Za-zÀ-ÿ\s\-]+$/", message: "Le type ne doit contenir que des lettres et des espaces.")]
     private ?string $type = null;
 
     #[ORM\Column(length: 255)]
@@ -58,10 +60,13 @@ class Evenement
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Le prix du ticket ne peut pas être vide.")]
+    #[Assert\Regex(pattern: "/^\d+(\.\d{1,2})?$|^Gratuit$/", message: "Le prix doit être un nombre positif ou 'Gratuit'.")]
     private ?string $ticket_prix = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "La fin de la période d'inscription ne peut pas être vide.")]
+    
+    #[Assert\LessThan(propertyPath: "date", message: "La fin de l'inscription doit être avant la date de l'événement.")]
     private ?string $periode_inscription_fin = null;
 
     public function getId(): ?int

@@ -19,6 +19,7 @@
                     <div class="form-group">
                         {{ form_label(form.telephone_number) }}
                         {{ form_widget(form.telephone_number, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                        {{ form_errors(form.telephone_number) }} {# This line displays the error message #}
                     </div>
 
                     <div class="form-group">

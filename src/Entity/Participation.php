@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\ParticipationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: ParticipationRepository::class)]
 class Participation
@@ -14,18 +16,27 @@ class Participation
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\ManyToOne(targetEntity: Evenement::class)]
+    #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
     #[ORM\Column]
     private ?int $id_event = null;
-
+    
+    #[Assert\NotBlank(message: "Le nom du participant est obligatoire.")]
+    #[Assert\Length(min: 3, max: 255, minMessage: "Le nom doit contenir au moins 3 caractères.")]
+    #[Assert\Regex(pattern: "/^[A-Za-zÀ-ÿ' -]+$/", message: "Le nom ne doit contenir que des lettres, espaces et apostrophes.")]
     #[ORM\Column(length: 255)]
     private ?string $nom_participant = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTime $date_inscription = null;
     
+    #[Assert\NotBlank(message: "Le nom de l'événement est obligatoire.")]
+    #[Assert\Length(min: 3, max: 255, minMessage: "Le nom de l'événement doit contenir au moins 3 caractères.")]
     #[ORM\Column(length: 255)]
     private ?string $evenement_nom = null;
-
+    
+    #[Assert\NotBlank(message: "Le numéro de téléphone est obligatoire.")]
+    #[Assert\Regex(pattern: "/^\d{8}$/", message: "Le numéro de téléphone doit contenir exactement 8 chiffres.")]
     #[ORM\Column]
     private ?int $telephone_number = null;
 
@@ -90,7 +101,7 @@ class Participation
 
     public function __construct()
 {
-    $this->date_inscription = new \DateTime(); // Automatically set current date
+    $this->date_inscription = new \DateTime(); 
 }
 
     public function getTelephoneNumber(): ?int

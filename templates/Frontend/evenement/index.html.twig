@@ -1,133 +1,146 @@
 {% extends 'base.html.twig' %}
+{% block page_title %}Event List{% endblock %}
+{% block breadcrumb %}Events{% endblock %}
 
 {% block body %}
     <style>
-        /* Table Style */
-        .table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        .table th, .table td {
-            padding: 12px 15px;
-            text-align: left;
-            vertical-align: middle;
-        }
-
-        
-
-        .table td {
-            background-color: #f8f9fa;
-            border-top: 1px solid #ddd;
-        }
-
-        /* Hover effect for rows */
-        .table-hover tbody tr:hover {
-            background-color: #f1f1f1;
-        }
-
-        /* Adjust action column to have better width */
-        .table th:last-child, .table td:last-child {
-            width: 250px; /* Adjusted for a wider action column */
-            text-align: center;
-        }
-
-        /* Buttons Styling */
-        .action-buttons {
+        /* Card Container */
+        .card-container {
             display: flex;
-            justify-content: space-between;
-            gap: 5px;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
         }
 
-        .action-buttons a, .action-buttons button {
-            padding: 6px 12px; 
-            font-size: 14px;
-            width: auto;
-            min-width: 80px; 
+        /* Card Style */
+        .card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: calc(33.333% - 20px); /* 3 cards per row */
+            padding: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        .action-buttons button {
-            cursor: pointer;
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
-        /* For small screen responsiveness */
-        @media (max-width: 768px) {
-            .table th:last-child,
-            .table td:last-child {
-                width: 200px; 
+        .card h3 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .card p {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .card .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+        }
+
+        .card .badge.bg-success {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .card .badge.bg-secondary {
+            background-color: #6c757d;
+            color: #fff;
+        }
+
+        .card .badge.bg-danger {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .card .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .card .action-buttons a {
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .card .action-buttons a.btn-primary {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .card .action-buttons a.btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .card .action-buttons a.btn-warning {
+            background-color: #ffc107;
+            color: #000;
+        }
+
+        .card .action-buttons a.btn-warning:hover {
+            background-color: #e0a800;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .card {
+                width: calc(50% - 20px); /* 2 cards per row */
             }
+        }
 
-            .action-buttons {
-                flex-direction: column; 
+        @media (max-width: 768px) {
+            .card {
+                width: 100%; /* 1 card per row */
             }
         }
     </style>
-
+    
+    
     <h1 class="event-title">Event List</h1>
 
-    <table class="table table-bordered table-hover">
-        <thead class="table-dark">
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Location</th>
-                <th>Type</th>
-                <th>Organizer</th>
-                <th>Max Participants</th>
-                <th>Status</th>
-                <th>Ticket Price</th>
-                <th>Inscription Deadline</th>
-                <th>Actions</th> <!-- Adjusted column width in CSS -->
-            </tr>
-        </thead>
-        <tbody>
+    <div class="card-container">
         {% for evenement in evenements %}
-            <tr>
-                <td>{{ evenement.id }}</td>
-                <td>{{ evenement.titre }}</td>
-                <td>{{ evenement.description }}</td>
-                <td>{{ evenement.date ? evenement.date|date('Y-m-d') : 'N/A' }}</td>
-                <td>{{ evenement.heure ? evenement.heure|date('H:i') : 'N/A' }}</td>
-                <td>{{ evenement.lieu }}</td>
-                <td>{{ evenement.type }}</td>
-                <td>{{ evenement.organisateurNom }}</td>
-                <td>{{ evenement.nombreMaxParticipants }}</td>
-                <td>
+            <div class="card">
+                <h3>{{ evenement.titre }}</h3>
+                <p><strong>Description:</strong> {{ evenement.description }}</p>
+                <p><strong>Date:</strong> {{ evenement.date ? evenement.date|date('Y-m-d') : 'N/A' }}</p>
+                <p><strong>Time:</strong> {{ evenement.heure ? evenement.heure|date('H:i') : 'N/A' }}</p>
+                <p><strong>Location:</strong> {{ evenement.lieu }}</p>
+                <p><strong>Type:</strong> {{ evenement.type }}</p>
+                <p><strong>Organizer:</strong> {{ evenement.organisateurNom }}</p>
+                <p><strong>Max Participants:</strong> {{ evenement.nombreMaxParticipants }}</p>
+                <p><strong>Status:</strong> 
                     {% if evenement.status == 'Active' %}
                         <span class="badge bg-success">Active</span>
                     {% else %}
                         <span class="badge bg-secondary">Inactive</span>
                     {% endif %}
-                </td>
-                <td>{{ evenement.ticketPrix }} TND</td>
-                <td>{{ evenement.periodeInscriptionFin ? evenement.periodeInscriptionFin|date('Y-m-d') : 'N/A' }}</td>
-                <td>
-                    <div class="action-buttons">
-                        <a href="{{ path('app_evenement_show', {'id': evenement.id}) }}" class="btn btn-primary btn-sm">View</a>
-                        
-
-                        {% if evenement.nombreMaxParticipants > 0 %}
-                            <a href="{{ path('participation_buy', {'id': evenement.id}) }}" class="btn btn-warning btn-sm">Buy Ticket</a>
-                        {% else %}
-                            <span class="badge bg-danger">Sold Out</span>
-                        {% endif %}
-
-                         
-                    </div>
-                </td>
-            </tr>
+                </p>
+                <p><strong>Ticket Price:</strong> {{ evenement.ticketPrix }} TND</p>
+                <p><strong>Inscription Deadline:</strong> {{ evenement.periodeInscriptionFin ? evenement.periodeInscriptionFin|date('Y-m-d') : 'N/A' }}</p>
+                <div class="action-buttons">
+                    <a href="{{ path('app_evenement_show', {'id': evenement.id}) }}" class="btn btn-primary">View</a>
+                    {% if evenement.nombreMaxParticipants > 0 %}
+                        <a href="{{ path('participation_buy', {'id': evenement.id}) }}" class="btn btn-warning">Buy Ticket</a>
+                    {% else %}
+                        <span class="badge bg-danger">Sold Out</span>
+                    {% endif %}
+                </div>
+            </div>
         {% else %}
-            <tr>
-                <td colspan="13" class="text-center text-muted">No events found</td>
-            </tr>
+            <p class="text-center text-muted">No events found</p>
         {% endfor %}
-        </tbody>
-    </table>
-
-    
-
+    </div>
 {% endblock %}
