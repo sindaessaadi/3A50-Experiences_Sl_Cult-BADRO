@@ -1,0 +1,58 @@
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>Preferences Form</h1>
+
+        {{ form_start(form) }}
+        <div class="mb-3">
+            <label class="form-label">Country</label>
+            {{ form_widget(form.Country, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.Country) }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Domain</label>
+            {{ form_widget(form.Domain, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.Domain) }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Preferred Language</label>
+            {{ form_widget(form.Preferred_Language, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.Preferred_Language) }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Teaching Mode</label>
+            {{ form_widget(form.Teaching_Mode, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.Teaching_Mode) }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">University Type</label>
+            {{ form_widget(form.University_Type, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.University_Type) }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Cultural Activities</label>
+            {{ form_widget(form.Cultural_Activities, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.Cultural_Activities) }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Climat Preference</label>
+            {{ form_widget(form.climat_pref, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.climat_pref) }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Language Level</label>
+            {{ form_widget(form.Language_Level, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.Language_Level) }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

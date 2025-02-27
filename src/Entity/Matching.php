@@ -14,7 +14,7 @@ class Matching
     #[ORM\Column]
     private ?int $id = null;
 
-   
+    // Validation: Max value of 100 for score_compatibilite
     #[ORM\Column]
     #[Assert\Range(
         min: 0,
@@ -74,6 +74,4 @@ class Matching
 
         return $this;
     }
-
-    
 }
