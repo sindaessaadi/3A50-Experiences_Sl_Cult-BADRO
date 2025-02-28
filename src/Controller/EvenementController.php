@@ -27,6 +27,7 @@ final class EvenementController extends AbstractController
                 'evenements' => $evenementRepository->findAll(),
             ]);
         }
+        
     }
 
     #[Route('/new', name: 'app_evenement_new', methods: ['GET', 'POST'])]

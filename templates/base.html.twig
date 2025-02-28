@@ -97,9 +97,19 @@
                     <a class="nav-item nav-link">About</a>
                     <a href="{{ path('app_evenement_index') }}" class="nav-item nav-link">Events</a>
                     <a href="{{ path('app_matching_index') }}" class="nav-item nav-link">Matching</a>
-                    <a  class="nav-item nav-link">preference</a>
-                    <a class="nav-item nav-link">Contact</a>
+                    <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">For Students</a>
+                <div class="dropdown-menu fade-down m-0">
+                    <a href="{{ path('app_preferences') }}" class="dropdown-item">Find your ideal exchange</a> <!-- This links to the matching page -->
+                    <a              class="dropdown-item">Experiences</a>
+                    <a               class="dropdown-item">Program</a>
                 </div>
+                </div>
+                </div>
+
+                    <a class="nav-item nav-link">Contact</a>
+                
+                
                 <a class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Join Now<i class="fa fa-arrow-right ms-3"></i></a>
             </div>
         </nav>

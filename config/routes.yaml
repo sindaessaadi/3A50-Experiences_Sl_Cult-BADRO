@@ -34,3 +34,12 @@ evenement_delete:
     controller: App\Controller\EvenementController::delete
     methods: [POST]
 
+notify_event:
+    path: /notify/new-event
+    controller: App\Controller\EvenementController::notifyEvent
+
+    
+
+app_preferences:
+    path: /preferences
+    controller: App\Controller\PreferencesController::index
