@@ -7,3 +7,7 @@ controllers:
 app_matching_index:
     path: /matching
     controller: App\Controller\MatchingController::index
+
+app_preferences:
+    path: /preferences
+    controller: App\Controller\PreferencesController::index

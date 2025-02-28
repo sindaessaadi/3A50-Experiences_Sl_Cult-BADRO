@@ -44,7 +44,11 @@
     transition: .5s;
 }
 
-.btn.btn-primary,
+.btn.btn-primary{
+    background-color: #024F65; /* Appliquer la couleur #024F65 comme fond */
+    color: #FFFFFF; /* Texte en blanc */
+}
+
 .btn.btn-secondary {
     color: #FFFFFF;
 }
