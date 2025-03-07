@@ -1,0 +1,19 @@
+{{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}   
+    {{ form_label(form.titre,"Titre") }}
+    {{ form_widget(form.titre) }}
+    {{ form_errors(form.titre) }}
+    {{ form_label(form.contenu,"Contenu") }}
+    {{ form_widget(form.contenu) }}
+    {{ form_errors(form.contenu) }}
+   
+    {{ form_label(form. evaluation,"Evaluation") }}
+    {{ form_widget(form.evaluation) }}
+    {{ form_errors(form.evaluation) }}
+     {{ form_label(form.id_user,"id user") }}
+    {{ form_widget(form.id_user) }}
+
+
+   
+   
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Average Replies per Experience{% endblock %}
+
+{% block body %}
+    <h1>Average Replies per Experience</h1>
+
+    <p>
+        <strong>Average Replies per Experience: </strong>
+        {{ averageReplies|number_format(2) }}
+    </p>
+
+    <h2>Replies per Experience</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Experience ID</th>
+                <th>Replies Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stat in replyStats %}
+                <tr>
+                    <td>{{ stat.experience_id }}</td>
+                    <td>{{ stat.reply_count }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="2">No data available</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

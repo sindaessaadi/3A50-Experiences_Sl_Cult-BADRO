@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Experience{% endblock %}
+
+{% block body %}
+    <h1>Experience</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ experience.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ experience.titre }}</td>
+            </tr>
+            <tr>
+                <th>Contenu</th>
+                <td>{{ experience.contenu }}</td>
+            </tr>
+            <tr>
+                <th>Date_publication</th>
+                <td>{{ experience.datePublication ? experience.datePublication|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Evaluation</th>
+                <td>{{ experience.evaluation }}</td>
+            </tr>
+            <tr>
+                <th>Id_user</th>
+                <td>{{ experience.idUser }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_experience_index') }}">back to list</a>
+
+    <a href="{{ path('app_experience_edit', {'id': experience.id}) }}">edit</a>
+
+    <form method="post" action="{{ path('app_experience_delete', {'id': experience.id}) }}" 
+      onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ experience.id) }}">
+    <button class="btn">Delete</button>
+</form>
+
+{% endblock %}

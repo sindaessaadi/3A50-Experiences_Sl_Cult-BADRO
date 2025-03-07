@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reply index{% endblock %}
+
+{% block body %}
+    <h1>Reply index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id
+                    <a href="{{ path('app_reply_index', {'sort_id': sort_id == 'asc' ? 'desc' : 'asc'}) }}">
+                        {% if sort_id == 'asc' %}
+                            &#8593;  {# Up arrow for ascending #}
+                        {% else %}
+                            &#8595;  {# Down arrow for descending #}
+                        {% endif %}
+                    </a>
+                </th>
+                <th>Id_user
+                    <a href="{{ path('app_reply_index', {'sort_idUser': sort_idUser == 'asc' ? 'desc' : 'asc'}) }}">
+                        {% if sort_idUser == 'asc' %}
+                            &#8593;  {# Up arrow for ascending #}
+                        {% else %}
+                            &#8595;  {# Down arrow for descending #}
+                        {% endif %}
+                    </a>
+                </th>
+                <th>Contenu
+                    <a href="{{ path('app_reply_index', {'sort_contenu': sort_contenu == 'asc' ? 'desc' : 'asc'}) }}">
+                        {% if sort_contenu == 'asc' %}
+                            &#8593;  {# Up arrow for ascending #}
+                        {% else %}
+                            &#8595;  {# Down arrow for descending #}
+                        {% endif %}
+                    </a>
+                </th>
+                <th>Date_reponse
+                    <a href="{{ path('app_reply_index', {'sort_dateReponse': sort_dateReponse == 'asc' ? 'desc' : 'asc'}) }}">
+                        {% if sort_dateReponse == 'asc' %}
+                            &#8593;  {# Up arrow for ascending #}
+                        {% else %}
+                            &#8595;  {# Down arrow for descending #}
+                        {% endif %}
+                    </a>
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reply in replies %}
+            <tr>
+                <td>{{ reply.id }}</td>
+                <td>{{ reply.idUser }}</td>
+                <td>{{ reply.contenu }}</td>
+                <td>{{ reply.dateReponse ? reply.dateReponse|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_reply_show', {'id': reply.id}) }}">show</a>
+                    <a href="{{ path('app_reply_edit', {'id': reply.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reply_new') }}">Create new</a>
+
+{% endblock %}

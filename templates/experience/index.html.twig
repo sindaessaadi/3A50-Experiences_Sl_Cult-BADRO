@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Experience index{% endblock %}
+
+{% block body %}
+    <h1>Experience index</h1>
+
+    <form method="get" action="{{ path('app_experience_index') }}">
+        <div>
+            <label for="search_titre">Search by Title</label>
+            <input type="text" id="search_titre" name="search_titre" value="{{ search_titre }}">
+            <button type="submit">Search</button>
+        </div>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre
+                    <a href="{{ path('app_experience_index', {'sort_titre': sort_titre == 'asc' ? 'desc' : 'asc', 'search_titre': search_titre }) }}">
+                        {% if sort_titre == 'asc' %}
+                            &#8593;
+                        {% else %}
+                            &#8595;
+                        {% endif %}
+                    </a>
+                </th>
+                <th>Contenu
+                    <a href="{{ path('app_experience_index', {'sort_contenu': sort_contenu == 'asc' ? 'desc' : 'asc', 'search_titre': search_titre }) }}">
+                        {% if sort_contenu == 'asc' %}
+                            &#8593;
+                        {% else %}
+                            &#8595;
+                        {% endif %}
+                    </a>
+                </th>
+                <th>Date de Publication
+                    <a href="{{ path('app_experience_index', {'sort_datePublication': sort_datePublication == 'asc' ? 'desc' : 'asc', 'search_titre': search_titre }) }}">
+                        {% if sort_datePublication == 'asc' %}
+                            &#8593;
+                        {% else %}
+                            &#8595;
+                        {% endif %}
+                    </a>
+                </th>
+                <th>Evaluation
+                    <a href="{{ path('app_experience_index', {'sort_evaluation': sort_evaluation == 'asc' ? 'desc' : 'asc', 'search_titre': search_titre }) }}">
+                        {% if sort_evaluation == 'asc' %}
+                            &#8593;
+                        {% else %}
+                            &#8595;
+                        {% endif %}
+                    </a>
+                </th>
+                <th>Id_user</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for experience in experiences %}
+            <tr>
+                <td>{{ experience.id }}</td>
+                <td>{{ experience.titre }}</td>
+                <td>{{ experience.contenu }}</td>
+                <td>{{ experience.datePublication ? experience.datePublication|date('Y-m-d') : '' }}</td>
+                <td>{{ experience.evaluation }}</td>
+                <td>{{ experience.idUser }}</td>
+                <td>
+                    <a href="{{ path('app_experience_show', {'id': experience.id}) }}">show</a>
+                    <a href="{{ path('app_experience_edit', {'id': experience.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_experience_new') }}">Create new</a>
+
+
+{% endblock %}
